@@ -2,7 +2,7 @@
 //  SMTPSenderAppDelegate.m
 //  SMTPSender
 //
-//  Created by Ian Baird on 10/28/08.
+//  Created by Ian Baird on 10/28/2008.
 //
 //  Copyright (c) 2008 Skorpiostech, Inc. All rights reserved.
 //
