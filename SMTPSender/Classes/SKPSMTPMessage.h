@@ -78,7 +78,7 @@ extern NSString *kSKPSMTPPartContentTransferEncodingKey;
     NSString *login;
     NSString *pass;
     NSString *relayHost;
-    short relayPort;
+    NSArray *relayPorts;
     
     NSString *subject;
     NSString *fromEmail;
@@ -106,6 +106,8 @@ extern NSString *kSKPSMTPPartContentTransferEncodingKey;
     
     id <SKPSMTPMessageDelegate> delegate;
     
+    NSTimeInterval connectTimeout;
+    
     NSTimer *connectTimer;
 }
 
@@ -113,7 +115,7 @@ extern NSString *kSKPSMTPPartContentTransferEncodingKey;
 @property(nonatomic, retain) NSString *pass;
 @property(nonatomic, retain) NSString *relayHost;
 
-@property(nonatomic, assign) short relayPort;
+@property(nonatomic, retain) NSArray *relayPorts;
 @property(nonatomic, assign) BOOL requiresAuth;
 @property(nonatomic, assign) BOOL wantsSecure;
 
@@ -121,6 +123,8 @@ extern NSString *kSKPSMTPPartContentTransferEncodingKey;
 @property(nonatomic, retain) NSString *fromEmail;
 @property(nonatomic, retain) NSString *toEmail;
 @property(nonatomic, retain) NSArray *parts;
+
+@property(nonatomic, assign) NSTimeInterval connectTimeout;
 
 @property(nonatomic, assign) id <SKPSMTPMessageDelegate> delegate;
 

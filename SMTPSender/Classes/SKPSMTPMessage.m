@@ -48,13 +48,35 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
 
 @implementation SKPSMTPMessage
 
-@synthesize login, pass, relayHost, relayPort, subject, fromEmail, toEmail, parts, requiresAuth, inputString, wantsSecure, delegate, connectTimer;
+@synthesize login, pass, relayHost, relayPorts, subject, fromEmail, toEmail, parts, requiresAuth, inputString, wantsSecure, delegate, connectTimer, connectTimeout;
+
+- (id)init
+{
+    static NSArray *defaultPorts = nil;
+    
+    if (!defaultPorts)
+    {
+        defaultPorts = [NSArray arrayWithObjects:[NSNumber numberWithShort:25], [NSNumber numberWithShort:465], [NSNumber numberWithShort:587], nil];
+        
+        // setup a default timeout (8 seconds)
+        connectTimeout = 8.0; 
+    }
+    
+    if (self = [super init])
+    {
+        // Setup the default ports
+        self.relayPorts = defaultPorts;
+    }
+    
+    return self;
+}
 
 - (void)dealloc
 {
     self.login = nil;
     self.pass = nil;
     self.relayHost = nil;
+    self.relayPorts = nil;
     self.subject = nil;
     self.fromEmail = nil;
     self.toEmail = nil;
@@ -89,7 +111,24 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     NSAssert(toEmail, @"send requires toEmail");
     NSAssert(parts, @"send requires parts");
     
+    if (![relayPorts count])
+    {
+        [delegate messageFailed:self 
+                          error:[NSError errorWithDomain:@"SKPSMTPMessageError" 
+                                                    code:kSKPSMTPErrorConnectionFailed 
+                                                userInfo:[NSDictionary dictionaryWithObject:@"unable to connect to server" 
+                                                                                     forKey:NSLocalizedDescriptionKey]]];
+        
+        return NO;
+    }
     
+    // Grab the next relay port
+    short relayPort = [[relayPorts objectAtIndex:0] shortValue];
+    
+    // Pop this off the head of the queue.
+    self.relayPorts = ([relayPorts count] > 1) ? [relayPorts subarrayWithRange:NSMakeRange(1, [relayPorts count] - 1)] : [NSArray array];
+    
+    NSLog(@"C: Attempting to connect to server at: %@:%d", relayHost, relayPort);
     
     [NSStream getStreamsToHostNamed:relayHost port:relayPort inputStream:&inputStream outputStream:&outputStream];
     if ((inputStream != nil) && (outputStream != nil))
@@ -112,7 +151,7 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
         
         self.inputString = [NSMutableString string];
         
-        self.connectTimer = [NSTimer scheduledTimerWithTimeInterval:20.0
+        self.connectTimer = [NSTimer scheduledTimerWithTimeInterval:connectTimeout
                                                              target:self
                                                            selector:@selector(connectionLivenessCheck:)
                                                            userInfo:nil 
@@ -524,12 +563,9 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
         [outputStream release];
         outputStream = nil;
         
-        
-        [delegate messageFailed:self 
-                          error:[NSError errorWithDomain:@"SKPSMTPMessageError" 
-                                                    code:kSKPSMTPErrorConnectionFailed 
-                                                userInfo:[NSDictionary dictionaryWithObject:@"unable to connect to server" 
-                                                                                     forKey:NSLocalizedDescriptionKey]]];
+        // Try the next port - if we don't have another one to try, this will fail
+        sendState = kSKPSMTPIdle;
+        [self send];
     }
     
     self.connectTimer = nil;

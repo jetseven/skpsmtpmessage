@@ -48,7 +48,6 @@
     testMsg.fromEmail = @"from@email.com";
     testMsg.toEmail = @"to@email.com";
     testMsg.relayHost = @"smtp.mac.com";
-    testMsg.relayPort = 25;
     testMsg.requiresAuth = YES;
     testMsg.login = @"put your login here";
     testMsg.pass = @"put your password here";
