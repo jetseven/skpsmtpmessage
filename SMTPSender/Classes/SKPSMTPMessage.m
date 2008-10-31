@@ -56,16 +56,16 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     
     if (!defaultPorts)
     {
-        defaultPorts = [NSArray arrayWithObjects:[NSNumber numberWithShort:25], [NSNumber numberWithShort:465], [NSNumber numberWithShort:587], nil];
-        
-        // setup a default timeout (8 seconds)
-        connectTimeout = 8.0; 
+        defaultPorts = [[NSArray alloc] initWithObjects:[NSNumber numberWithShort:25], [NSNumber numberWithShort:465], [NSNumber numberWithShort:587], nil];
     }
     
     if (self = [super init])
     {
         // Setup the default ports
         self.relayPorts = defaultPorts;
+        
+        // setup a default timeout (8 seconds)
+        connectTimeout = 8.0; 
     }
     
     return self;
