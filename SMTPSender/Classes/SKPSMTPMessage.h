@@ -55,6 +55,7 @@ extern NSString *kSKPSMTPPartMessageKey;
 extern NSString *kSKPSMTPPartContentTransferEncodingKey;
 
 // Error message codes
+#define kSKPSMPTErrorConnectionTimeout -5
 #define kSKPSMTPErrorConnectionFailed -3
 #define kSKPSMTPErrorConnectionInterrupted -4
 #define kSKPSMTPErrorUnsupportedLogin -2
@@ -109,6 +110,7 @@ extern NSString *kSKPSMTPPartContentTransferEncodingKey;
     NSTimeInterval connectTimeout;
     
     NSTimer *connectTimer;
+    NSTimer *watchdogTimer;
 }
 
 @property(nonatomic, retain) NSString *login;
