@@ -91,6 +91,7 @@ extern NSString *kSKPSMTPPartContentTransferEncodingKey;
     
     BOOL requiresAuth;
     BOOL wantsSecure;
+    BOOL validateSSLChain;
     
     SKPSMTPState sendState;
     BOOL isSecure;
@@ -120,6 +121,7 @@ extern NSString *kSKPSMTPPartContentTransferEncodingKey;
 @property(nonatomic, retain) NSArray *relayPorts;
 @property(nonatomic, assign) BOOL requiresAuth;
 @property(nonatomic, assign) BOOL wantsSecure;
+@property(nonatomic, assign) BOOL validateSSLChain;
 
 @property(nonatomic, retain) NSString *subject;
 @property(nonatomic, retain) NSString *fromEmail;

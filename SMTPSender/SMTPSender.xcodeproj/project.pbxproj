@@ -33,7 +33,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = CABE264E0EBB81A0008744A5 /* libsmtpsender */;
+			remoteGlobalIDString = CABE264E0EBB81A0008744A5;
 			remoteInfo = libsmtpsender;
 		};
 /* End PBXContainerItemProxy section */
@@ -294,6 +294,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SMTPSender_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = SMTPSender;
 			};
 			name = Debug;
@@ -306,6 +307,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SMTPSender_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = SMTPSender;
 			};
 			name = Release;
@@ -345,6 +347,7 @@
 				EXECUTABLE_PREFIX = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = libsmtpmessage;
 			};
@@ -358,6 +361,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXECUTABLE_PREFIX = "";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = libsmtpmessage;
 				ZERO_LINK = NO;

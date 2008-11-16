@@ -52,7 +52,8 @@
     testMsg.login = @"put your login here";
     testMsg.pass = @"put your password here";
     testMsg.subject = @"test message";
-    testMsg.wantsSecure = YES;
+    // Only do this for self-signed certs!
+    // testMsg.validateSSLChain = NO;
     testMsg.delegate = self;
     
     NSDictionary *plainPart = [NSDictionary dictionaryWithObjectsAndKeys:@"text/plain",kSKPSMTPPartContentTypeKey,

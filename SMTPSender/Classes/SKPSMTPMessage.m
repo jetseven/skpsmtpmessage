@@ -55,7 +55,8 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
 
 @implementation SKPSMTPMessage
 
-@synthesize login, pass, relayHost, relayPorts, subject, fromEmail, toEmail, parts, requiresAuth, inputString, wantsSecure, delegate, connectTimer, connectTimeout, watchdogTimer;
+@synthesize login, pass, relayHost, relayPorts, subject, fromEmail, toEmail, parts, requiresAuth, inputString, wantsSecure, \
+            delegate, connectTimer, connectTimeout, watchdogTimer, validateSSLChain;
 
 - (id)init
 {
@@ -73,6 +74,9 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
         
         // setup a default timeout (8 seconds)
         connectTimeout = 8.0; 
+        
+        // by default, validate the SSL chain
+        validateSSLChain = YES;
     }
     
     return self;
@@ -381,6 +385,15 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
                 {
                     if ([tmpLine hasPrefix:@"220 "])
                     {
+                        // Don't validate SSL certs.
+                        if (!self.validateSSLChain)
+                        {
+                            NSLog(@"WARNING: Will not validate SSL chain!!!");
+                            
+                            CFReadStreamSetProperty((CFReadStreamRef)inputStream, kCFStreamSSLValidatesCertificateChain, kCFBooleanFalse);
+                            CFWriteStreamSetProperty((CFWriteStreamRef)outputStream, kCFStreamSSLValidatesCertificateChain, kCFBooleanFalse);
+                        }
+                        
                         // Attempt to use TLSv1
                         if ( [inputStream setProperty:NSStreamSocketSecurityLevelTLSv1 forKey:NSStreamSocketSecurityLevelKey] &&
                             [outputStream setProperty:NSStreamSocketSecurityLevelTLSv1 forKey:NSStreamSocketSecurityLevelKey] )
