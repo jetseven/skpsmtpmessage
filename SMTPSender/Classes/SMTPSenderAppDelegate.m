@@ -52,6 +52,7 @@
     testMsg.login = @"put your login here";
     testMsg.pass = @"put your password here";
     testMsg.subject = @"test message";
+    testMsg.wantsSecure = YES; // smtp.gmail.com doesn't work without TLS!
 
     // Only do this for self-signed certs!
     // testMsg.validateSSLChain = NO;
