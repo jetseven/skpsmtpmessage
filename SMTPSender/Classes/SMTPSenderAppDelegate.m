@@ -52,12 +52,13 @@
     testMsg.login = @"put your login here";
     testMsg.pass = @"put your password here";
     testMsg.subject = @"test message";
+
     // Only do this for self-signed certs!
     // testMsg.validateSSLChain = NO;
     testMsg.delegate = self;
     
     NSDictionary *plainPart = [NSDictionary dictionaryWithObjectsAndKeys:@"text/plain",kSKPSMTPPartContentTypeKey,
-                               @"This is a test message.",kSKPSMTPPartMessageKey,@"7bit",kSKPSMTPPartContentTransferEncodingKey,nil];
+                               @"This is a tést messåge.",kSKPSMTPPartMessageKey,@"8bit",kSKPSMTPPartContentTransferEncodingKey,nil];
     
     NSString *vcfPath = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"vcf"];
     NSData *vcfData = [NSData dataWithContentsOfFile:vcfPath];
