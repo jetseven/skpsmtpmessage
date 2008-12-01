@@ -20,5 +20,5 @@ b) Build the libsmtpmessage.a library and include that.
    See: http://developer.apple.com/qa/qa2006/qa1490.html
 
 
-- Ian Baird <ibaird at gmail dot com>
+- Ian Baird
 
