@@ -658,6 +658,14 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
                                                         NSLocalizedString(@"Your server probably requires a username and password.", @"server relay fail error recovery"),NSLocalizedRecoverySuggestionErrorKey,nil]];
                         encounteredError = YES;
                     }
+                    else if ([tmpLine hasPrefix:@"550 "])
+                    {
+                        error =[NSError errorWithDomain:@"SKPSMTPMessageError" 
+                                                   code:kSKPSMTPErrorInvalidMessage 
+                                               userInfo:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"To address rejected.", @"server to address fail error description"),NSLocalizedDescriptionKey,
+                                                         NSLocalizedString(@"Please re-enter the To: address.", @"server to address fail error recovery"),NSLocalizedRecoverySuggestionErrorKey,nil]];
+                        encounteredError = YES;
+                    }
                     break;
                 }
                 case kSKPSMTPWaitingForEnterMail:
