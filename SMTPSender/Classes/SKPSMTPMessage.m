@@ -51,6 +51,8 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
 - (void)cleanUpStreams;
 - (void)startShortWatchdog;
 - (void)stopWatchdog;
+- (NSString *)formatAnAddress:(NSString *)address;
+- (NSString *)formatAddresses:(NSString *)addresses;
 
 @end
 
@@ -58,6 +60,9 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
 
 @synthesize login, pass, relayHost, relayPorts, subject, fromEmail, toEmail, parts, requiresAuth, inputString, wantsSecure, \
             delegate, connectTimer, connectTimeout, watchdogTimer, validateSSLChain;
+@synthesize ccEmail;
+@synthesize bccEmail;
+
 
 - (id)init
 {
@@ -92,6 +97,8 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     self.subject = nil;
     self.fromEmail = nil;
     self.toEmail = nil;
+	self.ccEmail = nil;
+	self.bccEmail = nil;
     self.parts = nil;
     self.inputString = nil;
     
@@ -123,6 +130,8 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     smtpMessageCopy.toEmail = self.toEmail;
     smtpMessageCopy.wantsSecure = self.wantsSecure;
     smtpMessageCopy.validateSSLChain = self.validateSSLChain;
+    smtpMessageCopy.ccEmail = self.ccEmail;
+    smtpMessageCopy.bccEmail = self.bccEmail;
     
     return smtpMessageCopy;
 }
@@ -270,6 +279,42 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
         }
     }
 }
+            
+
+- (NSString *)formatAnAddress:(NSString *)address {
+	NSString		*formattedAddress;
+	NSCharacterSet	*whitespaceCharSet = [NSCharacterSet whitespaceCharacterSet];
+
+	if (([address rangeOfString:@"<"].location == NSNotFound) && ([address rangeOfString:@">"].location == NSNotFound)) {
+		formattedAddress = [NSString stringWithFormat:@"RCPT TO:<%@>\r\n", [address stringByTrimmingCharactersInSet:whitespaceCharSet]];									
+	}
+	else {
+		formattedAddress = [NSString stringWithFormat:@"RCPT TO:%@\r\n", [address stringByTrimmingCharactersInSet:whitespaceCharSet]];																		
+	}
+	
+	return(formattedAddress);
+}
+
+- (NSString *)formatAddresses:(NSString *)addresses {
+	NSCharacterSet	*splitSet = [NSCharacterSet characterSetWithCharactersInString:@";,"];
+	NSMutableString	*multipleRcptTo = [NSMutableString string];
+	
+	if ((addresses != nil) && (![addresses isEqualToString:@""])) {
+		if( [addresses rangeOfString:@";"].location != NSNotFound || [addresses rangeOfString:@","].location != NSNotFound ) {
+			NSArray *addressParts = [addresses componentsSeparatedByCharactersInSet:splitSet];
+						
+			for( NSString *address in addressParts ) {
+				[multipleRcptTo appendString:[self formatAnAddress:address]];
+			}
+		}
+		else {
+			[multipleRcptTo appendString:[self formatAnAddress:addresses]];
+		}		
+	}
+	
+	return(multipleRcptTo);
+}
+
             
 - (void)parseBuffer
 {
@@ -563,13 +608,19 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
                 
                 case kSKPSMTPWaitingFromReply:
                 {
-                    if ([tmpLine hasPrefix:@"250 "])
-                    {
+					// toc 2009-02-18 begin changes per mdesaro issue 18 - http://code.google.com/p/skpsmtpmessage/issues/detail?id=18
+					// toc 2009-02-18 begin changes to support cc & bcc
+					
+                    if ([tmpLine hasPrefix:@"250 "]) {
                         sendState = kSKPSMTPWaitingToReply;
                         
-                        NSString *rcptTo = [NSString stringWithFormat:@"RCPT TO:<%@>\r\n", toEmail];
-                        NSLog(@"C: %@", rcptTo);
-                        if (CFWriteStreamWriteFully((CFWriteStreamRef)outputStream, (const uint8_t *)[rcptTo UTF8String], [rcptTo lengthOfBytesUsingEncoding:NSUTF8StringEncoding]) < 0)
+						NSMutableString	*multipleRcptTo = [NSMutableString string];
+						[multipleRcptTo appendString:[self formatAddresses:toEmail]];
+						[multipleRcptTo appendString:[self formatAddresses:ccEmail]];
+						[multipleRcptTo appendString:[self formatAddresses:bccEmail]];
+																		
+                        NSLog(@"C: %@", multipleRcptTo);
+                        if (CFWriteStreamWriteFully((CFWriteStreamRef)outputStream, (const uint8_t *)[multipleRcptTo UTF8String], [multipleRcptTo lengthOfBytesUsingEncoding:NSUTF8StringEncoding]) < 0)
                         {
                             error =  [outputStream streamError];
                             encounteredError = YES;
@@ -688,8 +739,35 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     NSMutableString *message = [[NSMutableString alloc] init];
     static NSString *separatorString = @"--SKPSMTPMessage--Separator--Delimiter\r\n";
     
+	CFUUIDRef	uuidRef   = CFUUIDCreate(kCFAllocatorDefault);
+	NSString	*uuid     = (NSString *)CFUUIDCreateString(kCFAllocatorDefault, uuidRef);
+	CFRelease(uuidRef);
+    
+    NSDate *now = [[NSDate alloc] init];
+	NSDateFormatter	*dateFormatter = [[NSDateFormatter alloc] init];
+	
+	[dateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss Z"];
+	
+	[message appendFormat:@"Date: %@\r\n", [dateFormatter stringFromDate:now]];
+	[message appendFormat:@"Message-id: <%@@%@>\r\n", [(NSString *)uuid stringByReplacingOccurrencesOfString:@"-" withString:@""], self.relayHost];
+	
+    [now release];
+    [dateFormatter release];
+    [uuid release];
+    
     [message appendFormat:@"From:%@\r\n", fromEmail];
-    [message appendFormat:@"To:%@\r\n", toEmail];
+	
+    
+	if ((self.toEmail != nil) && (![self.toEmail isEqualToString:@""])) 
+    {
+		[message appendFormat:@"To:%@\r\n", self.toEmail];		
+	}
+
+	if ((self.ccEmail != nil) && (![self.ccEmail isEqualToString:@""])) 
+    {
+		[message appendFormat:@"Cc:%@\r\n", self.ccEmail];		
+	}
+    
     [message appendString:@"Content-Type: multipart/mixed; boundary=SKPSMTPMessage--Separator--Delimiter\r\n"];
     [message appendString:@"Mime-Version: 1.0 (SKPSMTPMessage 1.0)\r\n"];
     [message appendFormat:@"Subject:%@\r\n\r\n",subject];

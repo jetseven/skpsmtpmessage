@@ -84,6 +84,8 @@ extern NSString *kSKPSMTPPartContentTransferEncodingKey;
     NSString *subject;
     NSString *fromEmail;
     NSString *toEmail;
+	NSString *ccEmail;
+	NSString *bccEmail;
     NSArray *parts;
     
     NSOutputStream *outputStream;
@@ -126,6 +128,8 @@ extern NSString *kSKPSMTPPartContentTransferEncodingKey;
 @property(nonatomic, retain) NSString *subject;
 @property(nonatomic, retain) NSString *fromEmail;
 @property(nonatomic, retain) NSString *toEmail;
+@property(nonatomic, retain) NSString *ccEmail;
+@property(nonatomic, retain) NSString *bccEmail;
 @property(nonatomic, retain) NSArray *parts;
 
 @property(nonatomic, assign) NSTimeInterval connectTimeout;
