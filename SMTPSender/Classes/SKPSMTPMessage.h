@@ -74,7 +74,7 @@ extern NSString *kSKPSMTPPartContentTransferEncodingKey;
 
 @end
 
-@interface SKPSMTPMessage : NSObject 
+@interface SKPSMTPMessage : NSObject <NSCopying>
 {
     NSString *login;
     NSString *pass;

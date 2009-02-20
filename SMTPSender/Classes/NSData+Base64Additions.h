@@ -38,5 +38,6 @@
 
 -(NSString *)encodeBase64ForData;
 -(NSString *)encodeWebSafeBase64ForData;
+-(NSString *)encodeWrappedBase64ForData;
 
 @end
