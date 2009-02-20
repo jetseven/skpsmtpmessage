@@ -45,14 +45,14 @@
     [window makeKeyAndVisible];
     
     SKPSMTPMessage *testMsg = [[SKPSMTPMessage alloc] init];
-    testMsg.fromEmail = @"rtmfd@mac.com";
-    testMsg.toEmail = @"ibaird@gmail.com";
+    testMsg.fromEmail = @"test@test.com";
+    testMsg.toEmail = @"test@test.com";
     testMsg.relayHost = @"smtp.mac.com";
     testMsg.requiresAuth = YES;
-    testMsg.login = @"rtmfd@mac.com";
-    testMsg.pass = @"jlh4397y";
+    testMsg.login = @"test@test.com";
+    testMsg.pass = @"testpassword";
     testMsg.subject = @"test message";
-    testMsg.bccEmail = @"ibaird@skorpiostech.com";
+    testMsg.bccEmail = @"testbcc@test.com";
     testMsg.wantsSecure = YES; // smtp.gmail.com doesn't work without TLS!
 
     // Only do this for self-signed certs!
