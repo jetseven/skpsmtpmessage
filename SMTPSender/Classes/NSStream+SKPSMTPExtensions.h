@@ -31,6 +31,7 @@
 //
 
 #import <CFNetwork/CFNetwork.h>
+#import <Foundation/NSStream.h>
 
 @interface NSStream (SKPSMTPExtensions)
 

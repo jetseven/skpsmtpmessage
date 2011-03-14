@@ -27,6 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+#import <Foundation/Foundation.h>
 #import "SKPSMTPMessage.h"
 #import "NSData+Base64Additions.h"
 #import "NSStream+SKPSMTPExtensions.h"

@@ -18,8 +18,6 @@
 		CABE26540EBB81B3008744A5 /* NSStream+SKPSMTPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F1123CAF0EB8F8B600DED5A8 /* NSStream+SKPSMTPExtensions.m */; };
 		CABE26550EBB81B3008744A5 /* SKPSMTPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F1123CB10EB8F8B600DED5A8 /* SKPSMTPMessage.m */; };
 		CABE26580EBB81BE008744A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		CABE26590EBB81BE008744A5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		CABE265A0EBB81BE008744A5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		CABE265B0EBB81BE008744A5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A6ABD70EB6E95300BA50E8 /* CFNetwork.framework */; };
 		CABE26640EBB823A008744A5 /* libsmtpmessage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CABE264F0EBB81A0008744A5 /* libsmtpmessage.a */; };
 		CABE26690EBB82D1008744A5 /* Base64Transcoder.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A6ABF10EB6FAE800BA50E8 /* Base64Transcoder.m */; };
@@ -87,8 +85,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CABE26580EBB81BE008744A5 /* Foundation.framework in Frameworks */,
-				CABE26590EBB81BE008744A5 /* UIKit.framework in Frameworks */,
-				CABE265A0EBB81BE008744A5 /* CoreGraphics.framework in Frameworks */,
 				CABE265B0EBB81BE008744A5 /* CFNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
