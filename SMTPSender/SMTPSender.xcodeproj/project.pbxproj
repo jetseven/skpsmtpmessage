@@ -15,6 +15,9 @@
 		2899E5220DE3E06400AC0155 /* SMTPSenderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* SMTPSenderViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* SMTPSenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* SMTPSenderViewController.m */; };
+		AAEAACFC132E60DE00999556 /* HSK_CFUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = F1497CFE0EDDCD000001BE3E /* HSK_CFUtilities.h */; };
+		AAEAACFE132E60EB00999556 /* NSStream+SKPSMTPExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = F1123CAE0EB8F8B600DED5A8 /* NSStream+SKPSMTPExtensions.h */; };
+		AAEAACFF132E60EB00999556 /* SKPSMTPMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = F1123CB00EB8F8B600DED5A8 /* SKPSMTPMessage.h */; };
 		CABE26540EBB81B3008744A5 /* NSStream+SKPSMTPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F1123CAF0EB8F8B600DED5A8 /* NSStream+SKPSMTPExtensions.m */; };
 		CABE26550EBB81B3008744A5 /* SKPSMTPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F1123CB10EB8F8B600DED5A8 /* SKPSMTPMessage.m */; };
 		CABE26580EBB81BE008744A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -181,6 +184,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAEAACFE132E60EB00999556 /* NSStream+SKPSMTPExtensions.h in Headers */,
+				AAEAACFF132E60EB00999556 /* SKPSMTPMessage.h in Headers */,
+				AAEAACFC132E60DE00999556 /* HSK_CFUtilities.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +334,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = iphoneos4.3;
@@ -342,6 +349,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PREBINDING = NO;
 				SDKROOT = iphoneos4.3;
 			};
@@ -358,6 +366,7 @@
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = libsmtpmessage;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -372,6 +381,7 @@
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = libsmtpmessage;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
