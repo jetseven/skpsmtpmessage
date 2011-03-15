@@ -42,5 +42,7 @@
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
 - (IBAction)sendMessage:(id)sender;
+- (void)updateTextView;
+
 @end
 
