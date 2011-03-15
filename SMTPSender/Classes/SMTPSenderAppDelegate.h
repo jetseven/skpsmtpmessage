@@ -37,11 +37,10 @@
 
 @interface SMTPSenderAppDelegate : NSObject <UIApplicationDelegate, SKPSMTPMessageDelegate> {
     UIWindow *window;
-    SMTPSenderViewController *viewController;
 }
-
+@property (nonatomic, retain) IBOutlet UITextView *textView;
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet SMTPSenderViewController *viewController;
 
+- (IBAction)sendMessage:(id)sender;
 @end
 
