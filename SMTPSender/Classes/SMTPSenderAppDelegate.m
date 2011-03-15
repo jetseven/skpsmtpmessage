@@ -52,45 +52,59 @@
 - (void)applicationDidFinishLaunching:(UIApplication *)application {    
     
     // Override point for customization after app launch    
-    //[window addSubview:viewController.view];
     [window makeKeyAndVisible];
 }
-
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self updateTextView];
+}
 
 - (void)dealloc {
     [window release];
     [super dealloc];
 }
 
-- (IBAction)sendMessage:(id)sender {
+- (void)updateTextView {
     NSMutableString *logText = [[NSMutableString alloc] init];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [logText appendString:@"Use the iOS Settings app to change the values below.\n\n"];
+    [logText appendFormat:@"From: %@\n", [defaults objectForKey:@"fromEmail"]];
+    [logText appendFormat:@"To: %@\n", [defaults objectForKey:@"toEmail"]];
+    [logText appendFormat:@"Host: %@\n", [defaults objectForKey:@"relayHost"]];
+    [logText appendFormat:@"Auth: %@\n", ([[defaults objectForKey:@"requiresAuth"] boolValue] ? @"On" : @"Off")];
+    
+    if ([[defaults objectForKey:@"requiresAuth"] boolValue]) {
+        [logText appendFormat:@"Login: %@\n", [defaults objectForKey:@"login"]];
+        [logText appendFormat:@"Password: %@\n", [defaults objectForKey:@"pass"]];
+    }
+    [logText appendFormat:@"Secure: %@\n", [[defaults objectForKey:@"wantsSecure"] boolValue] ? @"Yes" : @"No"];
+    self.textView.text = logText;
+    [logText release];
+
+}
+
+- (IBAction)sendMessage:(id)sender {
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     SKPSMTPMessage *testMsg = [[SKPSMTPMessage alloc] init];
     testMsg.fromEmail = [defaults objectForKey:@"fromEmail"];
-    [logText appendFormat:@"From: %@\n", testMsg.fromEmail];
     
     testMsg.toEmail = [defaults objectForKey:@"toEmail"];
-    [logText appendFormat:@"To: %@\n", testMsg.toEmail];
 
     testMsg.relayHost = [defaults objectForKey:@"relayHost"];
-    [logText appendFormat:@"Host: %@\n", testMsg.relayHost];
     
     testMsg.requiresAuth = [[defaults objectForKey:@"requiresAuth"] boolValue];
-    [logText appendFormat:@"Auth: %@\n", (testMsg.requiresAuth ? @"On" : @"Off")];
     
     if (testMsg.requiresAuth) {
         testMsg.login = [defaults objectForKey:@"login"];
-        [logText appendFormat:@"Login: %@\n", testMsg.login];
         
         testMsg.pass = [defaults objectForKey:@"pass"];
-        [logText appendFormat:@"Password: %@\n", testMsg.pass];
 
     }
     
     testMsg.wantsSecure = [[defaults objectForKey:@"wantsSecure"] boolValue]; // smtp.gmail.com doesn't work without TLS!
-    [logText appendFormat:@"Secure: %@\n", testMsg.wantsSecure ? @"Yes" : @"No"];
 
     
     testMsg.subject = @"test message";
@@ -99,7 +113,6 @@
     // Only do this for self-signed certs!
     // testMsg.validateSSLChain = NO;
     testMsg.delegate = self;
-    self.textView.text = logText;
     
     NSDictionary *plainPart = [NSDictionary dictionaryWithObjectsAndKeys:@"text/plain",kSKPSMTPPartContentTypeKey,
                                @"This is a tést messåge.",kSKPSMTPPartMessageKey,@"8bit",kSKPSMTPPartContentTransferEncodingKey,nil];
