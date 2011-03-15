@@ -1,0 +1,9 @@
+*.pbxuser
+*.perspective
+*.perspectivev3
+*.mode1v3
+*.mode2v3
+
+SMTPSender/SMTPSender.xcodeproj/xcuserdata/*.xcuserdatad
+SMTPSender/SMTPSender.xcodeproj/project.xcworkspace/xcuserdata/*.xcuserdatad
+

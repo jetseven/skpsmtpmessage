@@ -25,7 +25,6 @@
 		CABE26640EBB823A008744A5 /* libsmtpmessage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CABE264F0EBB81A0008744A5 /* libsmtpmessage.a */; };
 		CABE26690EBB82D1008744A5 /* Base64Transcoder.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A6ABF10EB6FAE800BA50E8 /* Base64Transcoder.m */; };
 		CABE266A0EBB82D1008744A5 /* NSData+Base64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A6ABF30EB6FAE800BA50E8 /* NSData+Base64Additions.m */; };
-		F1497D000EDDCD000001BE3E /* HSK_CFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F1497CFF0EDDCD000001BE3E /* HSK_CFUtilities.m */; };
 		F1497D010EDDCD100001BE3E /* HSK_CFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F1497CFF0EDDCD000001BE3E /* HSK_CFUtilities.m */; };
 		F1A6ABD80EB6E95300BA50E8 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A6ABD70EB6E95300BA50E8 /* CFNetwork.framework */; };
 		F1A6ACC90EB7B2B300BA50E8 /* test.vcf in Resources */ = {isa = PBXBuildFile; fileRef = F1A6ACC80EB7B2B300BA50E8 /* test.vcf */; };
@@ -273,7 +272,6 @@
 				28D7ACF80DDB3853001CB0EB /* SMTPSenderViewController.m in Sources */,
 				CABE26690EBB82D1008744A5 /* Base64Transcoder.m in Sources */,
 				CABE266A0EBB82D1008744A5 /* NSData+Base64Additions.m in Sources */,
-				F1497D000EDDCD000001BE3E /* HSK_CFUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,7 +306,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SMTPSender_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = SMTPSender;
 			};
 			name = Debug;
@@ -321,7 +322,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SMTPSender_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = SMTPSender;
 			};
 			name = Release;
