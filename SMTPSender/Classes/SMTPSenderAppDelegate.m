@@ -138,7 +138,8 @@
 - (void)messageFailed:(SKPSMTPMessage *)message error:(NSError *)error
 {
     
-    self.textView.text = [NSString stringWithFormat:@"Darn! Error: %@, %@", [error code], [error localizedDescription]];
+    //self.textView.text = [NSString stringWithFormat:@"Darn! Error: %@, %@", [error code], [error localizedDescription]];
+    self.textView.text = [NSString stringWithFormat:@"Darn! Error!\n%i: %@\n%@", [error code], [error localizedDescription], [error localizedRecoverySuggestion]];
     [message release];
     
     //NSLog(@"delegate - error(%d): %@", [error code], [error localizedDescription]);
