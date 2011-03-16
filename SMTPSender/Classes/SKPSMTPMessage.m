@@ -74,7 +74,7 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
         defaultPorts = [[NSArray alloc] initWithObjects:[NSNumber numberWithShort:25], [NSNumber numberWithShort:465], [NSNumber numberWithShort:587], nil];
     }
     
-    if (self = [super init])
+    if ((self = [super init]))
     {
         // Setup the default ports
         self.relayPorts = defaultPorts;
@@ -156,6 +156,46 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     self.watchdogTimer = nil;
 }
 
+- (BOOL)preflightCheckWithError:(NSError **)error {
+
+    CFHostRef host = CFHostCreateWithName(NULL, (CFStringRef)self.relayHost);
+    CFStreamError streamError;
+    
+    if (!CFHostStartInfoResolution(host, kCFHostAddresses, &streamError)) {
+        NSString *errorDomainName;
+         switch (streamError.domain) {
+            case kCFStreamErrorDomainCustom:
+                errorDomainName = @"kCFStreamErrorDomainCustom";
+                break;
+            case kCFStreamErrorDomainPOSIX:
+                 errorDomainName = @"kCFStreamErrorDomainPOSIX";
+                break;
+            case kCFStreamErrorDomainMacOSStatus:
+                 errorDomainName = @"kCFStreamErrorDomainMacOSStatus";
+                 break;
+            default:
+                 errorDomainName = [NSString stringWithFormat:@"Generic CFStream Error Domain %ld", streamError.domain];
+                 break;
+        }
+        *error = [NSError errorWithDomain:errorDomainName code:streamError.error userInfo:
+                  [NSDictionary dictionaryWithObjectsAndKeys:@"Error resolving address.", NSLocalizedDescriptionKey,
+                   @"Check your SMTP Host name", NSLocalizedRecoverySuggestionErrorKey, nil]];
+        return NO;
+    }
+    Boolean hasBeenResolved;
+    CFArrayRef addresses = CFHostGetAddressing(host, &hasBeenResolved);
+    if (!hasBeenResolved || addresses == NULL) {
+        *error = [NSError errorWithDomain:@"SKPSMTPMessageError" code:kSKPSMTPErrorNonExistentDomain userInfo:
+                  [NSDictionary dictionaryWithObjectsAndKeys:@"Error resolving host.", NSLocalizedDescriptionKey,
+                   @"Check your SMTP Host name", NSLocalizedRecoverySuggestionErrorKey, nil]];
+        CFRelease(host);
+        return NO;
+    }
+    
+    CFRelease(host);
+    return YES;
+}
+
 - (BOOL)send
 {
     NSAssert(sendState == kSKPSMTPIdle, @"Message has already been sent!");
@@ -172,6 +212,11 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     NSAssert(toEmail, @"send requires toEmail");
     NSAssert(parts, @"send requires parts");
     
+    NSError *error = nil;
+    if (![self preflightCheckWithError:&error]) {
+        [delegate messageFailed:self error:error];
+        return NO;
+    }
     if (![relayPorts count])
     {
         [delegate messageFailed:self 

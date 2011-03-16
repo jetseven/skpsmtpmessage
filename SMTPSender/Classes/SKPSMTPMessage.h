@@ -59,6 +59,7 @@ extern NSString *kSKPSMTPPartContentTransferEncodingKey;
 #define kSKPSMTPErrorConnectionInterrupted -4
 #define kSKPSMTPErrorUnsupportedLogin -2
 #define kSKPSMTPErrorTLSFail -1
+#define kSKPSMTPErrorNonExistentDomain 1
 #define kSKPSMTPErrorInvalidUserPass 535
 #define kSKPSMTPErrorInvalidMessage 550
 #define kSKPSMTPErrorNoRelay 530
