@@ -64,6 +64,8 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
 @synthesize ccEmail;
 @synthesize bccEmail;
 
+#pragma mark -
+#pragma mark Memory & Lifecycle
 
 - (id)init
 {
@@ -137,6 +139,9 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     return smtpMessageCopy;
 }
 
+#pragma mark -
+#pragma mark Connection Timers
+
 - (void)startShortWatchdog
 {
     NSLog(@"*** starting short watchdog ***");
@@ -156,35 +161,61 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     self.watchdogTimer = nil;
 }
 
-- (BOOL)preflightCheckWithError:(NSError **)error {
 
+#pragma mark Watchdog Callback
+
+- (void)connectionWatchdog:(NSTimer *)aTimer
+{
+    [self cleanUpStreams];
+    
+    // No hard error if we're wating on a reply
+    if (sendState != kSKPSMTPWaitingQuitReply)
+    {
+        NSError *error = [NSError errorWithDomain:@"SKPSMTPMessageError" 
+                                             code:kSKPSMPTErrorConnectionTimeout 
+                                         userInfo:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Timeout sending message.", @"server timeout fail error description"),NSLocalizedDescriptionKey,
+                                                   NSLocalizedString(@"Try sending your message again later.", @"server generic error recovery"),NSLocalizedRecoverySuggestionErrorKey,nil]];
+        [delegate messageFailed:self error:error];
+    }
+    else
+    {
+        [delegate messageSent:self];
+    }
+}
+
+#pragma mark -
+#pragma mark Connection Handling
+
+- (BOOL)preflightCheckWithError:(NSError **)error {
+    
     CFHostRef host = CFHostCreateWithName(NULL, (CFStringRef)self.relayHost);
     CFStreamError streamError;
     
     if (!CFHostStartInfoResolution(host, kCFHostAddresses, &streamError)) {
         NSString *errorDomainName;
-         switch (streamError.domain) {
+        switch (streamError.domain) {
             case kCFStreamErrorDomainCustom:
                 errorDomainName = @"kCFStreamErrorDomainCustom";
                 break;
             case kCFStreamErrorDomainPOSIX:
-                 errorDomainName = @"kCFStreamErrorDomainPOSIX";
+                errorDomainName = @"kCFStreamErrorDomainPOSIX";
                 break;
             case kCFStreamErrorDomainMacOSStatus:
-                 errorDomainName = @"kCFStreamErrorDomainMacOSStatus";
-                 break;
+                errorDomainName = @"kCFStreamErrorDomainMacOSStatus";
+                break;
             default:
-                 errorDomainName = [NSString stringWithFormat:@"Generic CFStream Error Domain %ld", streamError.domain];
-                 break;
+                errorDomainName = [NSString stringWithFormat:@"Generic CFStream Error Domain %ld", streamError.domain];
+                break;
         }
-        *error = [NSError errorWithDomain:errorDomainName code:streamError.error userInfo:
-                  [NSDictionary dictionaryWithObjectsAndKeys:@"Error resolving address.", NSLocalizedDescriptionKey,
-                   @"Check your SMTP Host name", NSLocalizedRecoverySuggestionErrorKey, nil]];
+        *error = [NSError errorWithDomain:errorDomainName
+                                     code:streamError.error
+                                 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Error resolving address.", NSLocalizedDescriptionKey,
+                                           @"Check your SMTP Host name", NSLocalizedRecoverySuggestionErrorKey, nil]];
         return NO;
     }
     Boolean hasBeenResolved;
-    CFArrayRef addresses = CFHostGetAddressing(host, &hasBeenResolved);
-    if (!hasBeenResolved || addresses == NULL) {
+    CFHostGetAddressing(host, &hasBeenResolved);
+    if (!hasBeenResolved) {
         *error = [NSError errorWithDomain:@"SKPSMTPMessageError" code:kSKPSMTPErrorNonExistentDomain userInfo:
                   [NSDictionary dictionaryWithObjectsAndKeys:@"Error resolving host.", NSLocalizedDescriptionKey,
                    @"Check your SMTP Host name", NSLocalizedRecoverySuggestionErrorKey, nil]];
@@ -195,6 +226,7 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     CFRelease(host);
     return YES;
 }
+
 
 - (BOOL)send
 {
@@ -217,6 +249,7 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
         [delegate messageFailed:self error:error];
         return NO;
     }
+    
     if (![relayPorts count])
     {
         [delegate messageFailed:self 
@@ -281,6 +314,9 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
         return NO;
     }
 }
+
+#pragma mark -
+#pragma mark <NSStreamDelegate>
 
 - (void)stream:(NSStream *)stream handleEvent:(NSStreamEvent)eventCode 
 {
@@ -830,7 +866,7 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     NSData *messageData = [message dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     [message release];
     
-    NSLog(@"C: %s", [messageData bytes], [messageData length]);
+    NSLog(@"C: %s", [messageData bytes]);
     if (CFWriteStreamWriteFully((CFWriteStreamRef)outputStream, (const uint8_t *)[messageData bytes], [messageData length]) < 0)
     {
         return NO;
@@ -888,24 +924,6 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     self.connectTimer = nil;
 }
 
-- (void)connectionWatchdog:(NSTimer *)aTimer
-{
-    [self cleanUpStreams];
-    
-    // No hard error if we're wating on a reply
-    if (sendState != kSKPSMTPWaitingQuitReply)
-    {
-        NSError *error = [NSError errorWithDomain:@"SKPSMTPMessageError" 
-                                             code:kSKPSMPTErrorConnectionTimeout 
-                                         userInfo:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Timeout sending message.", @"server timeout fail error description"),NSLocalizedDescriptionKey,
-                                                   NSLocalizedString(@"Try sending your message again later.", @"server generic error recovery"),NSLocalizedRecoverySuggestionErrorKey,nil]];
-        [delegate messageFailed:self error:error];
-    }
-    else
-    {
-        [delegate messageSent:self];
-    }
-}
 
 - (void)cleanUpStreams
 {
