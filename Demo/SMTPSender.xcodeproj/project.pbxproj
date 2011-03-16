@@ -13,30 +13,14 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		AA2B6F21132F11520098E285 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AA2B6F20132F11520098E285 /* Settings.bundle */; };
-		AAEAACFC132E60DE00999556 /* HSK_CFUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = F1497CFE0EDDCD000001BE3E /* HSK_CFUtilities.h */; };
-		AAEAACFE132E60EB00999556 /* NSStream+SKPSMTPExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = F1123CAE0EB8F8B600DED5A8 /* NSStream+SKPSMTPExtensions.h */; };
-		AAEAACFF132E60EB00999556 /* SKPSMTPMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = F1123CB00EB8F8B600DED5A8 /* SKPSMTPMessage.h */; };
-		CABE26540EBB81B3008744A5 /* NSStream+SKPSMTPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = F1123CAF0EB8F8B600DED5A8 /* NSStream+SKPSMTPExtensions.m */; };
-		CABE26550EBB81B3008744A5 /* SKPSMTPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F1123CB10EB8F8B600DED5A8 /* SKPSMTPMessage.m */; };
-		CABE26580EBB81BE008744A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		CABE265B0EBB81BE008744A5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A6ABD70EB6E95300BA50E8 /* CFNetwork.framework */; };
-		CABE26640EBB823A008744A5 /* libsmtpmessage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CABE264F0EBB81A0008744A5 /* libsmtpmessage.a */; };
-		CABE26690EBB82D1008744A5 /* Base64Transcoder.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A6ABF10EB6FAE800BA50E8 /* Base64Transcoder.m */; };
-		CABE266A0EBB82D1008744A5 /* NSData+Base64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A6ABF30EB6FAE800BA50E8 /* NSData+Base64Additions.m */; };
-		F1497D010EDDCD100001BE3E /* HSK_CFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F1497CFF0EDDCD000001BE3E /* HSK_CFUtilities.m */; };
+		AA2C47CA13310184008FDE01 /* Base64Transcoder.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2C47C713310184008FDE01 /* Base64Transcoder.m */; };
+		AA2C47CB13310184008FDE01 /* NSData+Base64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2C47C913310184008FDE01 /* NSData+Base64Additions.m */; };
+		AA2C47D2133101AC008FDE01 /* HSK_CFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2C47CD133101AC008FDE01 /* HSK_CFUtilities.m */; };
+		AA2C47D3133101AC008FDE01 /* NSStream+SKPSMTPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2C47CF133101AC008FDE01 /* NSStream+SKPSMTPExtensions.m */; };
+		AA2C47D4133101AC008FDE01 /* SKPSMTPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2C47D1133101AC008FDE01 /* SKPSMTPMessage.m */; };
 		F1A6ABD80EB6E95300BA50E8 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A6ABD70EB6E95300BA50E8 /* CFNetwork.framework */; };
 		F1A6ACC90EB7B2B300BA50E8 /* test.vcf in Resources */ = {isa = PBXBuildFile; fileRef = F1A6ACC80EB7B2B300BA50E8 /* test.vcf */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		CABE266B0EBB82E8008744A5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CABE264E0EBB81A0008744A5;
-			remoteInfo = libsmtpsender;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -49,18 +33,17 @@
 		32CA4F630368D1EE00C91783 /* SMTPSender_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMTPSender_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA2B6F20132F11520098E285 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		CABE264F0EBB81A0008744A5 /* libsmtpmessage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsmtpmessage.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		F1123CAE0EB8F8B600DED5A8 /* NSStream+SKPSMTPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSStream+SKPSMTPExtensions.h"; sourceTree = "<group>"; };
-		F1123CAF0EB8F8B600DED5A8 /* NSStream+SKPSMTPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSStream+SKPSMTPExtensions.m"; sourceTree = "<group>"; };
-		F1123CB00EB8F8B600DED5A8 /* SKPSMTPMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKPSMTPMessage.h; sourceTree = "<group>"; };
-		F1123CB10EB8F8B600DED5A8 /* SKPSMTPMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKPSMTPMessage.m; sourceTree = "<group>"; };
-		F1497CFE0EDDCD000001BE3E /* HSK_CFUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSK_CFUtilities.h; sourceTree = "<group>"; };
-		F1497CFF0EDDCD000001BE3E /* HSK_CFUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSK_CFUtilities.m; sourceTree = "<group>"; };
+		AA2C47C613310184008FDE01 /* Base64Transcoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Base64Transcoder.h; path = ../SMTPLibrary/Base64Transcoder.h; sourceTree = SOURCE_ROOT; };
+		AA2C47C713310184008FDE01 /* Base64Transcoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Base64Transcoder.m; path = ../SMTPLibrary/Base64Transcoder.m; sourceTree = SOURCE_ROOT; };
+		AA2C47C813310184008FDE01 /* NSData+Base64Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64Additions.h"; path = "../SMTPLibrary/NSData+Base64Additions.h"; sourceTree = SOURCE_ROOT; };
+		AA2C47C913310184008FDE01 /* NSData+Base64Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64Additions.m"; path = "../SMTPLibrary/NSData+Base64Additions.m"; sourceTree = SOURCE_ROOT; };
+		AA2C47CC133101AC008FDE01 /* HSK_CFUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSK_CFUtilities.h; path = ../SMTPLibrary/HSK_CFUtilities.h; sourceTree = SOURCE_ROOT; };
+		AA2C47CD133101AC008FDE01 /* HSK_CFUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSK_CFUtilities.m; path = ../SMTPLibrary/HSK_CFUtilities.m; sourceTree = SOURCE_ROOT; };
+		AA2C47CE133101AC008FDE01 /* NSStream+SKPSMTPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSStream+SKPSMTPExtensions.h"; path = "../SMTPLibrary/NSStream+SKPSMTPExtensions.h"; sourceTree = SOURCE_ROOT; };
+		AA2C47CF133101AC008FDE01 /* NSStream+SKPSMTPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSStream+SKPSMTPExtensions.m"; path = "../SMTPLibrary/NSStream+SKPSMTPExtensions.m"; sourceTree = SOURCE_ROOT; };
+		AA2C47D0133101AC008FDE01 /* SKPSMTPMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SKPSMTPMessage.h; path = ../SMTPLibrary/SKPSMTPMessage.h; sourceTree = SOURCE_ROOT; };
+		AA2C47D1133101AC008FDE01 /* SKPSMTPMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SKPSMTPMessage.m; path = ../SMTPLibrary/SKPSMTPMessage.m; sourceTree = SOURCE_ROOT; };
 		F1A6ABD70EB6E95300BA50E8 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		F1A6ABF00EB6FAE800BA50E8 /* Base64Transcoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Transcoder.h; sourceTree = "<group>"; };
-		F1A6ABF10EB6FAE800BA50E8 /* Base64Transcoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Transcoder.m; sourceTree = "<group>"; };
-		F1A6ABF20EB6FAE800BA50E8 /* NSData+Base64Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64Additions.h"; sourceTree = "<group>"; };
-		F1A6ABF30EB6FAE800BA50E8 /* NSData+Base64Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64Additions.m"; sourceTree = "<group>"; };
 		F1A6ACC80EB7B2B300BA50E8 /* test.vcf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.vcf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -69,35 +52,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CABE26640EBB823A008744A5 /* libsmtpmessage.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				F1A6ABD80EB6E95300BA50E8 /* CFNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CABE264D0EBB81A0008744A5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CABE26580EBB81BE008744A5 /* Foundation.framework in Frameworks */,
-				CABE265B0EBB81BE008744A5 /* CFNetwork.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		080E96DDFE201D6D7F000001 /* Classes */ = {
+		080E96DDFE201D6D7F000001 /* UIClasses */ = {
 			isa = PBXGroup;
 			children = (
-				F1A6ABF00EB6FAE800BA50E8 /* Base64Transcoder.h */,
-				F1A6ABF10EB6FAE800BA50E8 /* Base64Transcoder.m */,
-				F1A6ABF20EB6FAE800BA50E8 /* NSData+Base64Additions.h */,
-				F1A6ABF30EB6FAE800BA50E8 /* NSData+Base64Additions.m */,
 				1D3623240D0F684500981E51 /* SMTPSenderAppDelegate.h */,
 				1D3623250D0F684500981E51 /* SMTPSenderAppDelegate.m */,
 			);
+			name = UIClasses;
 			path = Classes;
 			sourceTree = "<group>";
 		};
@@ -105,7 +75,6 @@
 			isa = PBXGroup;
 			children = (
 				1D6058910D05DD3D006BFB54 /* SMTPSender.app */,
-				CABE264F0EBB81A0008744A5 /* libsmtpmessage.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -114,7 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				F1123CAD0EB8F89100DED5A8 /* Email (refresh from Handshake!) */,
-				080E96DDFE201D6D7F000001 /* Classes */,
+				080E96DDFE201D6D7F000001 /* UIClasses */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -156,31 +125,22 @@
 		F1123CAD0EB8F89100DED5A8 /* Email (refresh from Handshake!) */ = {
 			isa = PBXGroup;
 			children = (
-				F1497CFE0EDDCD000001BE3E /* HSK_CFUtilities.h */,
-				F1497CFF0EDDCD000001BE3E /* HSK_CFUtilities.m */,
-				F1123CAE0EB8F8B600DED5A8 /* NSStream+SKPSMTPExtensions.h */,
-				F1123CAF0EB8F8B600DED5A8 /* NSStream+SKPSMTPExtensions.m */,
-				F1123CB00EB8F8B600DED5A8 /* SKPSMTPMessage.h */,
-				F1123CB10EB8F8B600DED5A8 /* SKPSMTPMessage.m */,
+				AA2C47C613310184008FDE01 /* Base64Transcoder.h */,
+				AA2C47C713310184008FDE01 /* Base64Transcoder.m */,
+				AA2C47C813310184008FDE01 /* NSData+Base64Additions.h */,
+				AA2C47C913310184008FDE01 /* NSData+Base64Additions.m */,
+				AA2C47CC133101AC008FDE01 /* HSK_CFUtilities.h */,
+				AA2C47CD133101AC008FDE01 /* HSK_CFUtilities.m */,
+				AA2C47CE133101AC008FDE01 /* NSStream+SKPSMTPExtensions.h */,
+				AA2C47CF133101AC008FDE01 /* NSStream+SKPSMTPExtensions.m */,
+				AA2C47D0133101AC008FDE01 /* SKPSMTPMessage.h */,
+				AA2C47D1133101AC008FDE01 /* SKPSMTPMessage.m */,
 			);
 			name = "Email (refresh from Handshake!)";
 			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
-
-/* Begin PBXHeadersBuildPhase section */
-		CABE264B0EBB81A0008744A5 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AAEAACFE132E60EB00999556 /* NSStream+SKPSMTPExtensions.h in Headers */,
-				AAEAACFF132E60EB00999556 /* SKPSMTPMessage.h in Headers */,
-				AAEAACFC132E60DE00999556 /* HSK_CFUtilities.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		1D6058900D05DD3D006BFB54 /* SMTPSender */ = {
@@ -194,29 +154,11 @@
 			buildRules = (
 			);
 			dependencies = (
-				CABE266C0EBB82E8008744A5 /* PBXTargetDependency */,
 			);
 			name = SMTPSender;
 			productName = SMTPSender;
 			productReference = 1D6058910D05DD3D006BFB54 /* SMTPSender.app */;
 			productType = "com.apple.product-type.application";
-		};
-		CABE264E0EBB81A0008744A5 /* libsmtpmessage */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CABE265D0EBB81DC008744A5 /* Build configuration list for PBXNativeTarget "libsmtpmessage" */;
-			buildPhases = (
-				CABE264B0EBB81A0008744A5 /* Headers */,
-				CABE264C0EBB81A0008744A5 /* Sources */,
-				CABE264D0EBB81A0008744A5 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = libsmtpmessage;
-			productName = libsmtpsender;
-			productReference = CABE264F0EBB81A0008744A5 /* libsmtpmessage.a */;
-			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
@@ -235,7 +177,6 @@
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* SMTPSender */,
-				CABE264E0EBB81A0008744A5 /* libsmtpmessage */,
 			);
 		};
 /* End PBXProject section */
@@ -260,30 +201,15 @@
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* SMTPSenderAppDelegate.m in Sources */,
-				CABE26690EBB82D1008744A5 /* Base64Transcoder.m in Sources */,
-				CABE266A0EBB82D1008744A5 /* NSData+Base64Additions.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CABE264C0EBB81A0008744A5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F1497D010EDDCD100001BE3E /* HSK_CFUtilities.m in Sources */,
-				CABE26540EBB81B3008744A5 /* NSStream+SKPSMTPExtensions.m in Sources */,
-				CABE26550EBB81B3008744A5 /* SKPSMTPMessage.m in Sources */,
+				AA2C47CA13310184008FDE01 /* Base64Transcoder.m in Sources */,
+				AA2C47CB13310184008FDE01 /* NSData+Base64Additions.m in Sources */,
+				AA2C47D2133101AC008FDE01 /* HSK_CFUtilities.m in Sources */,
+				AA2C47D3133101AC008FDE01 /* NSStream+SKPSMTPExtensions.m in Sources */,
+				AA2C47D4133101AC008FDE01 /* SKPSMTPMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		CABE266C0EBB82E8008744A5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CABE264E0EBB81A0008744A5 /* libsmtpmessage */;
-			targetProxy = CABE266B0EBB82E8008744A5 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
@@ -349,37 +275,6 @@
 			};
 			name = Release;
 		};
-		CABE26500EBB81A0008744A5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				EXECUTABLE_PREFIX = "";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
-				PRODUCT_NAME = libsmtpmessage;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		CABE26510EBB81A0008744A5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				EXECUTABLE_PREFIX = "";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
-				PRODUCT_NAME = libsmtpmessage;
-				SKIP_INSTALL = YES;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -397,15 +292,6 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CABE265D0EBB81DC008744A5 /* Build configuration list for PBXNativeTarget "libsmtpmessage" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CABE26500EBB81A0008744A5 /* Debug */,
-				CABE26510EBB81A0008744A5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
