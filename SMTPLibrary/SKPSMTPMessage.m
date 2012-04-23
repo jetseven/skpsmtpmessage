@@ -207,18 +207,21 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
                 errorDomainName = [NSString stringWithFormat:@"Generic CFStream Error Domain %ld", streamError.domain];
                 break;
         }
-        *error = [NSError errorWithDomain:errorDomainName
-                                     code:streamError.error
-                                 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Error resolving address.", NSLocalizedDescriptionKey,
-                                           @"Check your SMTP Host name", NSLocalizedRecoverySuggestionErrorKey, nil]];
+        if (error)
+            *error = [NSError errorWithDomain:errorDomainName
+                                         code:streamError.error
+                                     userInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"Error resolving address.", NSLocalizedDescriptionKey,
+                                               @"Check your SMTP Host name", NSLocalizedRecoverySuggestionErrorKey, nil]];
+        CFRelease(host);
         return NO;
     }
     Boolean hasBeenResolved;
     CFHostGetAddressing(host, &hasBeenResolved);
     if (!hasBeenResolved) {
-        *error = [NSError errorWithDomain:@"SKPSMTPMessageError" code:kSKPSMTPErrorNonExistentDomain userInfo:
-                  [NSDictionary dictionaryWithObjectsAndKeys:@"Error resolving host.", NSLocalizedDescriptionKey,
-                   @"Check your SMTP Host name", NSLocalizedRecoverySuggestionErrorKey, nil]];
+        if(error)
+            *error = [NSError errorWithDomain:@"SKPSMTPMessageError" code:kSKPSMTPErrorNonExistentDomain userInfo:
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"Error resolving host.", NSLocalizedDescriptionKey,
+                       @"Check your SMTP Host name", NSLocalizedRecoverySuggestionErrorKey, nil]];
         CFRelease(host);
         return NO;
     }
