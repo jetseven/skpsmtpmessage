@@ -866,7 +866,7 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     [message appendFormat:@"Subject:%@\r\n\r\n",subject];
     [message appendString:separatorString];
     
-    NSData *messageData = [message dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSData *messageData = [message dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     [message release];
     
     NSLog(@"C: %s", [messageData bytes]);
