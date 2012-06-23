@@ -44,7 +44,7 @@
                                                @"smtp.example.com", @"relayHost",
                                                @"me@example.com", @"login",
                                                @"SekritSquirrel", @"pass",
-                                               [NSNumber numberWithBool:YES], @"requiredAuth",
+                                               [NSNumber numberWithBool:YES], @"requiresAuth",
                                                [NSNumber numberWithBool:YES], @"wantsSecure", nil];
     
     [userDefaults registerDefaults:defaultsDictionary];
