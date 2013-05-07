@@ -12,6 +12,14 @@ Note: If you choose to build these files as a static library, you must add the f
    
    See: http://developer.apple.com/qa/qa2006/qa1490.html
 
-
 - Steve Brokaw
+
+### Available via [Cocoapods](http://cocoapods.org/)
+
+You can add to your Podfile to integrate into your project. 
+
+    pod 'skpsmtpmessage'
+
+You might need to add the CFNetwork.framework to your linked files. 
+
 
