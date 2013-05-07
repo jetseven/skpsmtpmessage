@@ -14,7 +14,7 @@ Note: If you choose to build these files as a static library, you must add the f
 
 - Steve Brokaw
 
-### Added to [Cocoapods](http://cocoapods.org/)
+### Available via [Cocoapods](http://cocoapods.org/)
 
 You can add to your Podfile to integrate into your project. 
 
