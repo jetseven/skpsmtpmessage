@@ -124,9 +124,9 @@
                              @"attachment;\r\n\tfilename=\"test.vcf\"",kSKPSMTPPartContentDispositionKey,[vcfData encodeBase64ForData],kSKPSMTPPartMessageKey,@"base64",kSKPSMTPPartContentTransferEncodingKey,nil];
     
     testMsg.parts = [NSArray arrayWithObjects:plainPart,vcfPart,nil];
-    
-    [testMsg send];
-
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [testMsg send];
+    });
 }
 - (void)messageSent:(SKPSMTPMessage *)message
 {

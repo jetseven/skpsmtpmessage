@@ -44,8 +44,8 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
 @interface SKPSMTPMessage ()
 
 @property(nonatomic, retain) NSMutableString *inputString;
-@property(nonatomic, retain) NSTimer *connectTimer;
-@property(nonatomic, retain) NSTimer *watchdogTimer;
+@property(retain) NSTimer *connectTimer;
+@property(retain) NSTimer *watchdogTimer;
 
 - (void)parseBuffer;
 - (BOOL)sendParts;
@@ -93,6 +93,7 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
 
 - (void)dealloc
 {
+    NSLog(@"dealloc %@", self);
     self.login = nil;
     self.pass = nil;
     self.relayHost = nil;
@@ -255,11 +256,14 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     
     if (![relayPorts count])
     {
-        [delegate messageFailed:self 
-                          error:[NSError errorWithDomain:@"SKPSMTPMessageError" 
-                                                    code:kSKPSMTPErrorConnectionFailed 
-                                                userInfo:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Unable to connect to the server.", @"server connection fail error description"),NSLocalizedDescriptionKey,
-                                                          NSLocalizedString(@"Try sending your message again later.", @"server generic error recovery"),NSLocalizedRecoverySuggestionErrorKey,nil]]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [delegate messageFailed:self 
+                              error:[NSError errorWithDomain:@"SKPSMTPMessageError" 
+                                                        code:kSKPSMTPErrorConnectionFailed 
+                                                    userInfo:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Unable to connect to the server.", @"server connection fail error description"),NSLocalizedDescriptionKey,
+                                                              NSLocalizedString(@"Try sending your message again later.", @"server generic error recovery"),NSLocalizedRecoverySuggestionErrorKey,nil]]];
+
+        });
         
         return NO;
     }
@@ -272,12 +276,10 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     
     NSLog(@"C: Attempting to connect to server at: %@:%d", relayHost, relayPort);
     
-    self.connectTimer = [NSTimer scheduledTimerWithTimeInterval:connectTimeout
-                                                         target:self
-                                                       selector:@selector(connectionConnectedCheck:)
-                                                       userInfo:nil 
-                                                        repeats:NO];
     
+    self.connectTimer = [NSTimer timerWithTimeInterval:connectTimeout target:self selector:@selector(connectionConnectedCheck:) userInfo:nil repeats:NO];
+    [[NSRunLoop mainRunLoop] addTimer:self.connectTimer forMode:NSDefaultRunLoopMode];
+
     [NSStream getStreamsToHostNamed:relayHost port:relayPort inputStream:&inputStream outputStream:&outputStream];
     if ((inputStream != nil) && (outputStream != nil))
     {
@@ -290,10 +292,8 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
         [inputStream setDelegate:self];
         [outputStream setDelegate:self];
         
-        [inputStream scheduleInRunLoop:[NSRunLoop currentRunLoop]
-                               forMode:NSRunLoopCommonModes];
-        [outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop]
-                                forMode:NSRunLoopCommonModes];
+        [inputStream scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+        [outputStream scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
         [inputStream open];
         [outputStream open];
         
@@ -866,7 +866,7 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     [message appendFormat:@"Subject:%@\r\n\r\n",subject];
     [message appendString:separatorString];
     
-    NSData *messageData = [message dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSData *messageData = [message dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     [message release];
     
     NSLog(@"C: %s", [messageData bytes]);
