@@ -23,3 +23,8 @@ You can add to your Podfile to integrate into your project.
 You might need to add the CFNetwork.framework to your linked files. 
 
 
+
+// implemented inline e-mail images based on this thread
+https://code.google.com/p/skpsmtpmessage/issues/detail?id=30
+
+Kris

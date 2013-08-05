@@ -37,6 +37,8 @@ NSString *kSKPSMTPPartContentDispositionKey = @"kSKPSMTPPartContentDispositionKe
 NSString *kSKPSMTPPartContentTypeKey = @"kSKPSMTPPartContentTypeKey";
 NSString *kSKPSMTPPartMessageKey = @"kSKPSMTPPartMessageKey";
 NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransferEncodingKey";
+NSString *kSKPSMTPPartContentIdKey = @"kSKPSMTPPartContentIdKey";
+
 
 #define SHORT_LIVENESS_TIMEOUT 20.0
 #define LONG_LIVENESS_TIMEOUT 60.0
@@ -883,6 +885,14 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
         {
             [message appendFormat:@"Content-Disposition: %@\r\n", [part objectForKey:kSKPSMTPPartContentDispositionKey]];
         }
+        
+        
+        if ([part objectForKey:kSKPSMTPPartContentIdKey])
+        {
+            [message appendFormat:@"Content-ID: %@\r\n", [part objectForKey:kSKPSMTPPartContentIdKey]];
+            NSLog(@" part key %@ ",[part objectForKey:kSKPSMTPPartContentIdKey] );
+        }
+        
         [message appendFormat:@"Content-Type: %@\r\n", [part objectForKey:kSKPSMTPPartContentTypeKey]];
         [message appendFormat:@"Content-Transfer-Encoding: %@\r\n\r\n", [part objectForKey:kSKPSMTPPartContentTransferEncodingKey]];
         [message appendString:[part objectForKey:kSKPSMTPPartMessageKey]];
