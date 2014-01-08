@@ -134,7 +134,7 @@ extern NSString *kSKPSMTPPartContentTransferEncodingKey;
 
 @property(nonatomic, assign) NSTimeInterval connectTimeout;
 
-@property(nonatomic, assign) id <SKPSMTPMessageDelegate> delegate;
+@property(nonatomic, strong) id <SKPSMTPMessageDelegate> delegate;
 
 - (BOOL)send;
 
