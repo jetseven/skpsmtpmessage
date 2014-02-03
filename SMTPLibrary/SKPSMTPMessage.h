@@ -108,8 +108,6 @@ extern NSString *kSKPSMTPPartContentTransferEncodingKey;
     // Content support flags
     BOOL server8bitMessages;
     
-    id <SKPSMTPMessageDelegate> delegate;
-    
     NSTimeInterval connectTimeout;
     
     NSTimer *connectTimer;
