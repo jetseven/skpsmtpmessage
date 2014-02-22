@@ -55,6 +55,8 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
 - (NSString *)formatAnAddress:(NSString *)address;
 - (NSString *)formatAddresses:(NSString *)addresses;
 
+- (void)_informDelegateOfServerResponse:(NSString*)response;
+
 @end
 
 @implementation SKPSMTPMessage
@@ -420,6 +422,8 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
             [self stopWatchdog];
             
             NSLog(@"S: %@", tmpLine);
+            [self _informDelegateOfServerResponse:tmpLine];
+            
             switch (sendState)
             {
                 case kSKPSMTPConnecting:
@@ -941,6 +945,16 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
                             forMode:NSDefaultRunLoopMode];
     [outputStream release];
     outputStream = nil;
+}
+
+#pragma mark - <SKPSMTPMessageDelegate> Optionals
+- (void)_informDelegateOfServerResponse:(NSString*)response
+{
+    if ([self.delegate respondsToSelector:@selector(receivedServerResponse:)]) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            [self.delegate receivedServerResponse:response];
+        });
+    }
 }
 
 @end

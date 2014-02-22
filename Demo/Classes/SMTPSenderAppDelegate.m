@@ -131,18 +131,30 @@
 - (void)messageSent:(SKPSMTPMessage *)message
 {
     [message release];
-    self.textView.text  = @"Yay! Message was sent!";
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.textView.text  = @"Yay! Message was sent!";
+    });
+    
     //NSLog(@"delegate - message sent");
 }
 
 - (void)messageFailed:(SKPSMTPMessage *)message error:(NSError *)error
 {
-    
-    //self.textView.text = [NSString stringWithFormat:@"Darn! Error: %@, %@", [error code], [error localizedDescription]];
-    self.textView.text = [NSString stringWithFormat:@"Darn! Error!\n%i: %@\n%@", [error code], [error localizedDescription], [error localizedRecoverySuggestion]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //self.textView.text = [NSString stringWithFormat:@"Darn! Error: %@, %@", [error code], [error localizedDescription]];
+        self.textView.text = [NSString stringWithFormat:@"Darn! Error!\n%i: %@\n%@",
+                              [error code],
+                              [error localizedDescription],
+                              [error localizedRecoverySuggestion]];
+    });
     [message release];
     
     //NSLog(@"delegate - error(%d): %@", [error code], [error localizedDescription]);
+}
+
+- (void)receivedServerResponse:(NSString *)response
+{
+    NSLog(@"Server Response received: %@", response);
 }
 
 @end
