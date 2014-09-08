@@ -52,6 +52,7 @@ extern NSString *kSKPSMTPPartContentDispositionKey;
 extern NSString *kSKPSMTPPartContentTypeKey;
 extern NSString *kSKPSMTPPartMessageKey;
 extern NSString *kSKPSMTPPartContentTransferEncodingKey;
+extern NSString *kSKPSMTPPartContentIdKey;
 
 // Error message codes
 #define kSKPSMPTErrorConnectionTimeout -5

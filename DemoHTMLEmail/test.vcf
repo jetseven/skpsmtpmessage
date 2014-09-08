@@ -1,0 +1,14 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Dirt;Joe;Thomas;Mr.;Sr.
+FN:Mr. Joe Thomas Dirt Sr.
+ORG:Trad Inc.;Office of the Pres
+TITLE:Chief Pres
+EMAIL;type=INTERNET;type=HOME:joedirt@hotmail.com
+TEL;type=HOME:123-642-5555
+TEL;type=WORK:555-5555
+TEL;type=CELL:555-555-5555
+TEL;type=MAIN:(203) 333-3333
+URL;type=HOME:www.home.com
+URL;type=WORK:www.work.com
+END:VCARD
