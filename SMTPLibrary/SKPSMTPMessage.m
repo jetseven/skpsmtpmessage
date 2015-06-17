@@ -59,7 +59,7 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
 
 @implementation SKPSMTPMessage
 
-@synthesize login, pass, relayHost, relayPorts, subject, fromEmail, toEmail, parts, requiresAuth, inputString, wantsSecure, \
+@synthesize login, pass, relayHost, relayPorts, subject, fromEmail, replyToEmail, toEmail, parts, requiresAuth, inputString, wantsSecure, \
             delegate, connectTimer, connectTimeout, watchdogTimer, validateSSLChain;
 @synthesize ccEmail;
 @synthesize bccEmail;
@@ -100,6 +100,7 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     self.relayPorts = nil;
     self.subject = nil;
     self.fromEmail = nil;
+    self.replyToEmail = nil;
     self.toEmail = nil;
 	self.ccEmail = nil;
 	self.bccEmail = nil;
@@ -125,6 +126,7 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     SKPSMTPMessage *smtpMessageCopy = [[[self class] allocWithZone:zone] init];
     smtpMessageCopy.delegate = self.delegate;
     smtpMessageCopy.fromEmail = self.fromEmail;
+    smtpMessageCopy.replyToEmail = self.replyToEmail;
     smtpMessageCopy.login = self.login;
     smtpMessageCopy.parts = [[self.parts copy] autorelease];
     smtpMessageCopy.pass = self.pass;
@@ -851,10 +853,16 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     [message appendFormat:@"From:%@\r\n", fromEmail];
 	
     
-	if ((self.toEmail != nil) && (![self.toEmail isEqualToString:@""])) 
+
+    if ((self.replyToEmail != nil) && (![self.replyToEmail isEqualToString:@""]))
     {
-		[message appendFormat:@"To:%@\r\n", self.toEmail];		
-	}
+        [message appendFormat:@"Reply-To:%@\r\n", self.replyToEmail];
+    }
+    
+    if ((self.toEmail != nil) && (![self.toEmail isEqualToString:@""])) 
+    {
+        [message appendFormat:@"To:%@\r\n", self.toEmail];      
+    }
 
 	if ((self.ccEmail != nil) && (![self.ccEmail isEqualToString:@""])) 
     {
