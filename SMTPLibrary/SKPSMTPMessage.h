@@ -83,6 +83,7 @@ extern NSString *kSKPSMTPPartContentTransferEncodingKey;
     
     NSString *subject;
     NSString *fromEmail;
+    NSString *replyToEmail;
     NSString *toEmail;
 	NSString *ccEmail;
 	NSString *bccEmail;
@@ -127,6 +128,7 @@ extern NSString *kSKPSMTPPartContentTransferEncodingKey;
 
 @property(nonatomic, retain) NSString *subject;
 @property(nonatomic, retain) NSString *fromEmail;
+@property(nonatomic, retain) NSString *replyToEmail;
 @property(nonatomic, retain) NSString *toEmail;
 @property(nonatomic, retain) NSString *ccEmail;
 @property(nonatomic, retain) NSString *bccEmail;
