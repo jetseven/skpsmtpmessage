@@ -59,8 +59,8 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
 
 @implementation SKPSMTPMessage
 
-@synthesize login, pass, relayHost, relayPorts, subject, fromEmail, toEmail, parts, requiresAuth, inputString, wantsSecure, \
-            delegate, connectTimer, connectTimeout, watchdogTimer, validateSSLChain;
+@synthesize login, pass, relayHost, relayPorts, subject, fromEmail, fromFriendlyName, toEmail, toFriendlyName, parts, requiresAuth, \
+            inputString, wantsSecure, delegate, connectTimer, connectTimeout, watchdogTimer, validateSSLChain;
 @synthesize ccEmail;
 @synthesize bccEmail;
 
@@ -100,7 +100,9 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     self.relayPorts = nil;
     self.subject = nil;
     self.fromEmail = nil;
+    self.fromFriendlyName = nil;
     self.toEmail = nil;
+    self.toFriendlyName = nil;
 	self.ccEmail = nil;
 	self.bccEmail = nil;
     self.parts = nil;
@@ -122,6 +124,7 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     SKPSMTPMessage *smtpMessageCopy = [[[self class] allocWithZone:zone] init];
     smtpMessageCopy.delegate = self.delegate;
     smtpMessageCopy.fromEmail = self.fromEmail;
+    smtpMessageCopy.fromFriendlyName = self.fromFriendlyName;
     smtpMessageCopy.login = self.login;
     smtpMessageCopy.parts = [self.parts copy];
     smtpMessageCopy.pass = self.pass;
@@ -129,6 +132,7 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
     smtpMessageCopy.requiresAuth = self.requiresAuth;
     smtpMessageCopy.subject = self.subject;
     smtpMessageCopy.toEmail = self.toEmail;
+    smtpMessageCopy.toFriendlyName = self.toFriendlyName;
     smtpMessageCopy.wantsSecure = self.wantsSecure;
     smtpMessageCopy.validateSSLChain = self.validateSSLChain;
     smtpMessageCopy.ccEmail = self.ccEmail;
@@ -847,16 +851,28 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
 	[message appendFormat:@"Date: %@\r\n", [dateFormatter stringFromDate:now]];
 	[message appendFormat:@"Message-id: <%@@%@>\r\n", [(NSString *)uuid stringByReplacingOccurrencesOfString:@"-" withString:@""], self.relayHost];
     
-    [message appendFormat:@"From:%@\r\n", fromEmail];
-	
+
+  if ((self.fromFriendlyName != nil) && (![self.fromFriendlyName isEqualToString:@""]))
+  {
+    [message appendFormat:@"From:\"%@\" <%@>\r\n", self.fromFriendlyName, self.fromEmail];
+  }	 
+  else {
+    [message appendFormat:@"From:%@\r\n", self.fromEmail];
+  }
     
 	if ((self.toEmail != nil) && (![self.toEmail isEqualToString:@""])) 
+  {
+    if ((self.toFriendlyName != nil) && (![self.toFriendlyName isEqualToString:@""]))
     {
-		[message appendFormat:@"To:%@\r\n", self.toEmail];		
+      [message appendFormat:@"To:\"%@\" <%@>\r\n", self.toFriendlyName, self.toEmail];
+    }
+    else {
+		  [message appendFormat:@"To:%@\r\n", self.toEmail];		
+    }
 	}
 
 	if ((self.ccEmail != nil) && (![self.ccEmail isEqualToString:@""])) 
-    {
+  {
 		[message appendFormat:@"Cc:%@\r\n", self.ccEmail];		
 	}
     
