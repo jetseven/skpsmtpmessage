@@ -570,7 +570,7 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
                         // Attempt to use TLSv1
                         CFMutableDictionaryRef sslOptions = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
                         
-                        CFDictionarySetValue(sslOptions, kCFStreamSSLLevel, kCFStreamSocketSecurityLevelTLSv1);
+                        CFDictionarySetValue(sslOptions, kCFStreamSSLLevel, CFSTR("kCFStreamSocketSecurityLevelTLSv1_2"));
                         
                         if (!self.validateSSLChain)
                         {
