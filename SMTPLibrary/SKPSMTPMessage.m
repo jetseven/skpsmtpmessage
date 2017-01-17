@@ -362,6 +362,11 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
             
             break;
         }
+        case NSStreamEventNone:
+        case NSStreamEventErrorOccurred:
+        case NSStreamEventHasSpaceAvailable:
+        case NSStreamEventOpenCompleted:
+            break;
     }
 }
             
