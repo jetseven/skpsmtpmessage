@@ -811,6 +811,16 @@ NSString *kSKPSMTPPartContentTransferEncodingKey = @"kSKPSMTPPartContentTransfer
             break;
         }
     }
+    
+    if (!encounteredError && ([tmpLine hasPrefix:@"5"] || [tmpLine hasPrefix:@"4"])) {
+        NSString *format = NSLocalizedString(@"SMTP Error %@", @"server report unrecoverable error, user needs to change input");
+        NSString *message = [NSString stringWithFormat:format, tmpLine];
+        error = [NSError errorWithDomain:@"SKPSMTPMessageError"
+                                    code:kSKPSMTPErrorBadResponse
+                                userInfo:[NSDictionary dictionaryWithObjectsAndKeys:message,NSLocalizedDescriptionKey,nil]];
+        encounteredError = YES;
+    }
+    
     self.inputString = [[[inputString substringFromIndex:[scanner scanLocation]] mutableCopy] autorelease];
     
     if (messageSent)
