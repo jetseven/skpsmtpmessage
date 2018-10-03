@@ -62,6 +62,7 @@ extern NSString *kSKPSMTPPartContentTransferEncodingKey;
 #define kSKPSMTPErrorNonExistentDomain 1
 #define kSKPSMTPErrorInvalidUserPass 535
 #define kSKPSMTPErrorInvalidMessage 550
+#define kSKPSMTPErrorBadResponse -6 //all 4xx and 5xx response codes
 #define kSKPSMTPErrorNoRelay 530
 
 @class SKPSMTPMessage;
